@@ -1,4 +1,5 @@
-        <!-- Content Start -->
+
+       <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -50,11 +51,14 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="img/user-default.png" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">Phúc Hưng</span>
+                            <span class="d-none d-lg-inline-flex">
+                            <?php $user = $_SESSION['user'];
+                            echo $user['name'];
+                            ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">Hồ sơ</a>
-                            <a href="#" class="dropdown-item">Đăng xuất</a>
+                            <a href="logout.php" class="dropdown-item">Đăng xuất</a>
                         </div>
                     </div>
                 </div>
