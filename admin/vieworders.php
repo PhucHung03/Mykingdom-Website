@@ -7,7 +7,7 @@ $id = $_GET['id'];
 //ket noi csdl
 require('../conn/conn.php');
 
-$sql_str = "select * from orders where id=$id";
+$sql_str = "select * from dichvu_benhnhan where maBenhNhan=$id";
 // echo $sql_str; exit;   //debug cau lenh
 
 $res = mysqli_query($conn, $sql_str);

@@ -3,7 +3,7 @@ require("../conn/conn.php");
 $id = $_GET['id'];
 
 $sql_str = "select products.id as pid,summary,description, products.name as pname,stock,price,disscounted_price,
-images, categories.name as cname, brands.name as bname 
+products.images, categories.name as cname, brands.name as bname 
 from products,categories,brands 
 where products.category_id= categories.id and products.brand_id=brands.id and 
 products.id= $id";

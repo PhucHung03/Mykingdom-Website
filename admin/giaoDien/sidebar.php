@@ -34,7 +34,6 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Đơn hàng</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="list_order.php" class="dropdown-item">Tất cả đơn</a>
-                            <a href="#1" class="dropdown-item">Đã hủy</a>
                         </div>
                     </div>
                     

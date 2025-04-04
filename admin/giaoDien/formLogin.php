@@ -73,12 +73,6 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-6">
-                  <div class="form-group form-check text-left">
-                    <input type="checkbox" name="remember" class="form-check-input" id="remember_me" />
-                    <label class="form-check-label" for="remember_me">Nhớ mật khẩu</label>
-                  </div>
-                </div>
                 <div class="col-12 mt-3">
                     <button class="btn btn-primary w-100" type="submit" name="login">Đăng nhập</button>
                   </div>

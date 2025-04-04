@@ -19,23 +19,27 @@ require("./components/bannerTC.php");
             <div class="row g-1 mb-4 mt-2 pb-4 d-flex flex-wrap justify-content-start">
                 <?php
                 require("./conn/conn.php");
-                $sql_str = "select * from categories order by name desc";
+                $sql_str = "SELECT * FROM categories ORDER BY name DESC";
                 $result = mysqli_query($conn, $sql_str);
                 while ($row = mysqli_fetch_assoc($result)) {
                     $arr = explode(";", $row["images"]);
                 ?>
                     <div class="col-lg-2 col-md-3 col-sm-6 text-center p-1 cate-gory">
-                        <a href="#"><img style="width: 70%;" src="<?= 'admin/' . $arr[0] ?>" alt=""></a>
+                        <!-- Chuyển danh mục qua trang shop.php và lọc theo slug -->
+                        <a href="shop.php?category=<?= $row['slug'] ?>">
+                            <img style="width: 70%;" src="<?= 'admin/' . $arr[0] ?>" alt="">
+                        </a>
                         <div class="mt-2">
-                            <a class="cate-name text-dark" href="#"><?= $row['name'] ?></a>
+                            <!-- Chuyển danh mục qua trang shop.php và lọc theo slug -->
+                            <a class="cate-name text-dark" href="shop.php?category=<?= $row['slug'] ?>"><?= $row['name'] ?></a>
                         </div>
                     </div>
                 <?php
                 }
                 ?>
             </div>
-
         </div>
+
     </section>
     <!-- CATE END-->
 
@@ -116,23 +120,24 @@ require("./components/bannerTC.php");
                     while ($row3 = mysqli_fetch_assoc($result3)) {
                         $arr3 = explode(";", $row3["images"]);
                     ?>
-
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="<?= "admin/" . $arr3[0] ?>" style="width: 90px;" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6><?= $row3['name'] ?></h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product__price"><?= number_format($row3["price"], 0, '', '.') . 'VNĐ' ?></div>
-                            </div>
+                    <a href="product-details.php?id=<?= $row['id'] ?>">  
+                    <div class="trend__item">
+                        <div class="trend__item__pic">
+                            <img src="<?= "admin/" . $arr3[0] ?>" style="width: 90px;" alt="">
                         </div>
+                        <div class="trend__item__text">
+                            <h6><?= $row3['name'] ?></h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price"><?= number_format($row3["price"], 0, '', '.') . 'VNĐ' ?></div>
+                        </div>
+                    </div>
+                    </a>
                     <?php } ?>
                 </div>
             </div>
@@ -148,23 +153,24 @@ require("./components/bannerTC.php");
                     while ($row = mysqli_fetch_assoc($result)) {
                         $arr = explode(";", $row["images"]);
                     ?>
-
-                        <div class="trend__item">
-                            <div class="trend__item__pic">
-                                <img src="<?= "admin/" . $arr[0] ?>" style="width: 90px;" alt="">
-                            </div>
-                            <div class="trend__item__text">
-                                <h6><?= $row["name"] ?></h6>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+                        <a href="product-details.php?id=<?= $row['id'] ?>">
+                            <div class="trend__item">
+                                <div class="trend__item__pic">
+                                    <img src="<?= "admin/" . $arr[0] ?>" style="width: 90px;" alt="">
                                 </div>
-                                <div class="product__price"><?= number_format($row["price"], 0, '', '.') . 'VNĐ' ?></div>
+                                <div class="trend__item__text">
+                                    <h6><?= $row["name"] ?></h6>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="product__price"><?= number_format($row["price"], 0, '', '.') . 'VNĐ' ?></div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     <?php } ?>
                 </div>
             </div>
@@ -180,7 +186,7 @@ require("./components/bannerTC.php");
                     while ($row = mysqli_fetch_assoc($result)) {
                         $arr = explode(";", $row["images"]);
                     ?>
-
+                        <a href="product-details.php?id=<?= $row['id'] ?>">
                         <div class="trend__item">
                             <div class="trend__item__pic">
                                 <img src="<?= "admin/" . $arr[0] ?>" style="width: 90px;" alt="">
@@ -203,6 +209,7 @@ require("./components/bannerTC.php");
                                 </div>
                             </div>
                         </div>
+                        </a>
                     <?php } ?>
                 </div>
             </div>
@@ -248,95 +255,6 @@ require("./components/bannerTC.php");
 <!-- Services Section End -->
 
 
-
-
-
-<!-- Mini cart -->
-<div class="shopping-cart">
-    <div class="shopping-cart-header">
-        <div class="row">
-            <div class="col-4">
-
-                <div id="close-minicart">
-                    <i class="fa fa-close cart-icon"></i>
-                </div>
-            </div>
-            <div class="col-8">
-
-                <div style="font-size: 25px;" class="float-right">
-                    <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">323</span>
-                </div>
-            </div>
-
-        </div>
-    </div> <!--end shopping-cart-header -->
-
-
-    <ul class="row pt-2 mini-cart">
-        <li class="col-xl-12 col-md-4">
-            <figure class="itemside mb-3">
-                <a href="#khoa" class="aside"><img src="./img/product/book-1.jpg" class="img-sm border"></a>
-                <figcaption class="info align-self-center">
-                    <a href="" class="text-truncate-1 text-dark" class="title">Dell Laptop with 500GB HDD ith 500GB HDD ith 500GB HDD</a>
-                    <a href="" class="text-truncate-1 text-dark">Truyện tranh</a>
-
-                    <span class="text-danger">100.000đ </span> <span>x1</span>
-                </figcaption>
-            </figure>
-
-        </li>
-        <li class="col-xl-12 col-md-4">
-            <figure class="itemside mb-3">
-                <div class="aside"><img src="./img/product/book-1.jpg" class="img-sm border"></div>
-                <figcaption class="info align-self-center">
-                    <a href="" class="text-truncate-1 text-dark" class="title">Dell Laptop with 500GB HDD ith 500GB HDD ith 500GB HDD</a>
-                    <a href="" class="text-truncate-1 text-dark">Truyện tranh</a>
-
-                    <span class="text-danger">100.000đ </span> <span>x1</span>
-                </figcaption>
-            </figure>
-
-        </li>
-        <li class="col-xl-12 col-md-4">
-            <figure class="itemside mb-3">
-                <div class="aside"><img src="./img/product/book-1.jpg" class="img-sm border"></div>
-                <figcaption class="info align-self-center">
-                    <a href="" class="text-truncate-1 text-dark" class="title">Dell Laptop with 500GB HDD ith 500GB HDD ith 500GB HDD</a>
-                    <a href="" class="text-truncate-1 text-dark">Tiểu thuyết</a>
-
-                    <span class="text-danger">100.000đ </span> <span>x1</span>
-                </figcaption>
-            </figure>
-
-        </li>
-        <li class="col-xl-12 col-md-4">
-            <div class="text-center text-dark">30 sản phẩm thêm vào giỏ</div>
-        </li>
-    </ul>
-    <hr>
-    <div class="row">
-        <div class="col-12">
-            <div class="text-center">
-                <!-- <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">323</span> -->
-                <span class="text-dark font-weight-bolder">Tổng số phụ:</span>
-                <span class="text-danger font-weight-bolder">200.000₫</span>
-            </div>
-        </div>
-    </div>
-    <hr style="margin-bottom: -15px;">
-
-    <div class="row">
-        <div class="col-6">
-            <a href="shop-cart.html" class="button">Xem giỏ hàng</a>
-
-        </div>
-        <div class="col-6">
-
-            <a href="checkout.html" class="button btn-outline-primary">Thanh toán</a>
-        </div>
-    </div>
-
-</div> <!--end shopping-cart -->
 
 
 

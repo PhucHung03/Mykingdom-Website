@@ -3145,6 +3145,7 @@ ol {
     content: "/";
     font-size: 13px;
   }
+
   .header__menu {
     display: none;
   }
@@ -3323,6 +3324,10 @@ ol {
     top: -2px;
     content: "/";
     font-size: 13px;
+  }
+  .offcanvas__auth a:hover {
+    color: #000; /* Màu đen */
+    text-decoration: none; /* Loại bỏ gạch chân */
   }
   .header__menu {
     display: none;

@@ -1,45 +1,44 @@
 <?php
 session_start();
-    require("./conn/conn.php");
-    if(isset($_POST['addCard'])){
+require("./conn/conn.php");
+if (isset($_POST['addCard'])) {
         $id = $_POST['pid'];
         $quantity = $_POST['quantity'];
         $cart = [];
-        if(isset($_SESSION['cart'])){
+        if (isset($_SESSION['cart'])) {
             $cart = $_SESSION['cart'];
         }
 
         $isFound = false;
-        for($i = 0;$i<count($cart);$i++){
-            if($cart[$i]['id'] == $id){
+        for ($i = 0; $i < count($cart); $i++) {
+            if ($cart[$i]['id'] == $id) {
                 $cart[$i]['quantity'] = intval($cart[$i]['quantity']) + intval($quantity);
                 $isFound = true;
-                break; 
+                break;
             }
         }
-        if(!$isFound){ //khong tim thay san pham trong gio hang
+        if (!$isFound) { //khong tim thay san pham trong gio hang
             $sql_str = "select*from products where id =$id";
-            $result = mysqli_query($conn,$sql_str);
+            $result = mysqli_query($conn, $sql_str);
             $product = mysqli_fetch_assoc($result);
-            $product['quantity']= $quantity;
-            $cart[]=$product;
+            $product['quantity'] = $quantity;
+            $cart[] = $product;
         }
-        
-        //update session
-        $_SESSION['cart']=$cart;
-        
-    }
 
-    require('./components/headerTC.php');
-    $idsp = $_GET['id'];
-    $sql_str = "select products.id as pid,summary,description, products.name as pname,stock,price,disscounted_price,
+        //update session
+        $_SESSION['cart'] = $cart;
+}
+
+require('./components/headerTC.php');
+$idsp = $_GET['id'];
+$sql_str = "select products.id as pid,summary,description, products.name as pname,stock,price,disscounted_price,
     products.images, categories.name as cname, brands.name as bname 
     from products,categories,brands 
     where products.category_id= categories.id and products.brand_id=brands.id and 
     products.id= $idsp";
-    $result = mysqli_query($conn, $sql_str);
-    $row = mysqli_fetch_assoc($result);
-    $arr = explode(";", $row["images"]);
+$result = mysqli_query($conn, $sql_str);
+$row = mysqli_fetch_assoc($result);
+$arr = explode(";", $row["images"]);
 ?>
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
@@ -95,9 +94,9 @@ session_start();
 
                     <div class="product__details__price">
                         <?php if ($row["disscounted_price"] > 0): ?>
-                            <?= number_format($row["disscounted_price"],0,'','.').'VNĐ' ?> <span><?= number_format($row["price"],0,'','.').'VNĐ' ?></span>
+                            <?= number_format($row["disscounted_price"], 0, '', '.') . 'VNĐ' ?> <span><?= number_format($row["price"], 0, '', '.') . 'VNĐ' ?></span>
                         <?php else: ?>
-                            <?= number_format($row["price"],0,'','.').'VNĐ' ?>
+                            <?= number_format($row["price"], 0, '', '.') . 'VNĐ' ?>
                         <?php endif; ?></span>
                     </div>
                     <p class="text-truncate-4-pd-details"><?= $row["summary"] ?></p>
@@ -115,13 +114,13 @@ session_start();
                                 </div>
                                 <!-- <input type="hidden" value="1" name="qty"> -->
                                 <span class="text-dark"><?= $row["stock"] ?> sản phẩm có sẵn</span>
-                                <input type="hidden" value="<?=$idsp?>" name="pid">
+                                <input type="hidden" value="<?= $idsp ?>" name="pid">
 
                             </div>
 
-                            
+
                             <div class="quantity">
-                                
+
                                 <button style="border: none;" type="submit" class="cart-btn btn-primary" name="addCard"><span class="icon_bag_alt"></span> Thêm vào giỏ</button>
                             </div>
                         </form>
@@ -157,7 +156,7 @@ session_start();
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4 class="mb-4">Tính năng đang được cập nhật!</h4>
-                                    
+
                                 </div>
                             </div>
 
@@ -186,7 +185,7 @@ session_start();
     }
 
     // Tăng giảm số lượng sản phẩm giỏ hàng và chi tiết sản phẩm
-   
+
     document.addEventListener('DOMContentLoaded', function() {
         const minusButton = document.querySelector('.button-minus');
         const plusButton = document.querySelector('.button-plus');

@@ -1,3 +1,10 @@
+<?php
+error_reporting(1);
+
+if (isset($_SESSION['KH'])) {
+    $userKH = $_SESSION['KH'];
+}
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -37,39 +44,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__close">+</div>
-        <ul class="offcanvas__widget">
-            <li><span class="icon_search search-switch"></span></li>
-            <li><a href="#"><span class="icon_heart_alt"></span>
-                    <div class="tip">2</div>
-                </a></li>
-            <li><a href="#"><span class="icon_bag_alt"></span>
-                    <div class="tip">2</div>
-                </a></li>
-        </ul>
-        <div class="offcanvas__logo">
-            <a href="./index.html"><img src="img/logo.png" alt=""></a>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__auth">
-            <a href="#">Đăng nhập</a>
-            <a href="#">Đăng ký</a>
-        </div>
-        <div class="offcanvas__auth acount">
-            <a href="#"><img src="img/product/product-1.jpg" alt="">KHOA123456</a>
-        </div>
-
-    </div>
-    <!-- Offcanvas Menu End -->
-
     <!-- Header Section Begin -->
     <header class="header">
         <div class="container">
@@ -97,9 +71,6 @@
                                     <li><a href="#">Đơn hàng của bạn</a></li>
                                 </ul>
                             </li>
-
-
-
                         </ul>
                     </nav>
                 </div>
@@ -111,29 +82,49 @@
                         </div> -->
 
                         <!-- TÊn login tối đa 10 ky tự -->
-                        <div class="header__right__auth acount">
-                            <a href="#"><img src="img/product/product-1.jpg" alt="">PHÚC HƯNG</a>
-
-                        </div>
-                        <ul class="header__right__widget">
-                            <li><span class="icon_search search-switch"></span></li>
-
-                            <li><a id="cart-mini" href="cart.php"><span class="icon_bag_alt"></span>
-                                    <div class="tip">
-                                    <?php
-                                        $cart = [];
-                                        if (isset($_SESSION['cart'])) {
-                                            $cart = $_SESSION['cart'];
-                                        }
-                                        $count = 0;
-                                        foreach ($cart as $item) {
-                                            $count += $item['quantity'];
-                                        }
-                                        echo $count;
+                        <?php if (isset($_SESSION['KH'])) { ?>
+                                <div class="header__right__auth acount dropdown-toggle" data-bs-toggle="dropdown">
+                                    <a href="#">
+                                        <?php 
+                                        echo $userKH['name'];
                                         ?>
+                                    </a>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                    <a href="#" class="dropdown-item">Hồ sơ</a>
+                                    <a href="#" class="dropdown-item">Đăng xuất</a>
+                                </div>
+                        <?php
+                        } else {
+                        ?>
+                            <div class="offcanvas__auth d-flex">
+                                <a href="./formLogin_user.php">Đăng nhập/ </a>
+                                <a href="./registerUser.php"> Đăng ký</a>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                        <ul class="header__right__widget">
+                            <form action="timkiem.php" method="get">
 
-                                    </div>
-                                </a></li>
+                                <li><span class="icon_search search-switch" name="timkiem"></span></li>
+                                <li><a id="cart-mini" href="cart.php"><span class="icon_bag_alt"></span>
+                            </form>
+                            <div class="tip">
+                                <?php
+                                $cart = [];
+                                if (isset($_SESSION['cart'])) {
+                                    $cart = $_SESSION['cart'];
+                                }
+                                $count = 0;
+                                foreach ($cart as $item) {
+                                    $count += $item['quantity'];
+                                }
+                                echo $count;
+                                ?>
+
+                            </div>
+                            </a></li>
                         </ul>
                     </div>
                 </div>
